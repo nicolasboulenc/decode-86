@@ -20,6 +20,12 @@ const uint8 mov = 0b10001000;
 char *regs[] = { "al", "cl", "dl", "bl", "ah", "ch", "dh", "bh", 
 				 "ax", "cx", "dx", "bx", "sp", "bp", "si", "di" };
 
+char *rm_mod11[] = { "al", "cl", "dl", "bl", "ah", "ch", "dh", "bh", 
+					 "ax", "cx", "dx", "bx", "sp", "bp", "si", "di" };
+
+char *rm_mod11[] = { "al", "cl", "dl", "bl", "ah", "ch", "dh", "bh", 
+					 "ax", "cx", "dx", "bx", "sp", "bp", "si", "di" };
+
 
 void convertToBinary(uint8 n) {
 	if (n > 1)
@@ -61,16 +67,23 @@ int main(void) {
 			char *dst;
 			char *src;
 
-			if(d == 1) {
-				// reg = dst
-				dst = regs[ (w << 3) + reg ];
-				src = regs[ (w << 3) + rm ];
+			if(mod == 0b11) {
+				if(d == 1) {
+					// reg = dst
+					dst = regs_mod11[ (w << 3) + reg ];
+					src = regs_mod11[ (w << 3) + rm ];
+				}
+				else {
+					// reg = src
+					src = regs_mod11[ (w << 3) + reg ];
+					dst = regs_mod11[ (w << 3) + rm ];
+				}
 			}
-			else {
-				// reg = src
-				src = regs[ (w << 3) + reg ];
-				dst = regs[ (w << 3) + rm ];
+			else if(mod == 0b11) {
+
 			}
+
+
 
 			printf("%s %s, %s\n", op, dst, src);
 		}
